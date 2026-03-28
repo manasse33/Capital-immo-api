@@ -75,6 +75,7 @@ class BienController extends Controller
             'etage' => 'nullable|integer|min:0',
             'type' => 'required|in:maison,villa,appartement,local,terrain',
             'transaction' => 'required|in:vente,location',
+            'location_period' => 'required_if:transaction,location|nullable|in:mensuel,journalier',
             'zone' => 'required|string|max:100',
             'quartier' => 'required|string|max:100',
             'reference' => 'nullable|string|max:50|unique:biens',
@@ -88,6 +89,9 @@ class BienController extends Controller
         $validated['user_id'] = $request->user()->id;
         $validated['statut'] = $validated['statut'] ?? 'disponible';
         $validated['en_vedette'] = $validated['en_vedette'] ?? false;
+        if ($validated['transaction'] !== 'location') {
+            $validated['location_period'] = null;
+        }
 
         DB::beginTransaction();
 
@@ -127,6 +131,7 @@ class BienController extends Controller
             'etage' => 'nullable|integer|min:0',
             'type' => 'sometimes|in:maison,villa,appartement,local,terrain',
             'transaction' => 'sometimes|in:vente,location',
+            'location_period' => 'required_if:transaction,location|nullable|in:mensuel,journalier',
             'zone' => 'sometimes|string|max:100',
             'quartier' => 'sometimes|string|max:100',
             'statut' => 'sometimes|in:disponible,vendu,reserve',
@@ -135,6 +140,10 @@ class BienController extends Controller
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
+
+        if (array_key_exists('transaction', $validated) && $validated['transaction'] !== 'location') {
+            $validated['location_period'] = null;
+        }
 
         DB::beginTransaction();
 

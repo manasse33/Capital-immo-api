@@ -24,6 +24,7 @@ class Bien extends Model
         'etage',
         'type',
         'transaction',
+        'location_period',
         'zone',
         'quartier',
         'reference',
