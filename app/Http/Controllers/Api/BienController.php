@@ -137,9 +137,13 @@ class BienController extends Controller
             'statut' => 'sometimes|in:disponible,vendu,reserve',
             'en_vedette' => 'nullable|boolean',
             'caracteristiques' => 'nullable|array',
+            'replace_images' => 'nullable|boolean',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
+
+        $replaceImages = $request->boolean('replace_images');
+        unset($validated['replace_images']);
 
         if (array_key_exists('transaction', $validated) && $validated['transaction'] !== 'location') {
             $validated['location_period'] = null;
@@ -152,7 +156,16 @@ class BienController extends Controller
 
             // Upload des nouvelles images
             if ($request->hasFile('images')) {
-                $maxOrder = $bien->images()->max('ordre') ?? -1;
+                if ($replaceImages) {
+                    foreach ($bien->images as $image) {
+                        $this->imageService->delete($image->url);
+                    }
+                    $bien->images()->delete();
+                    $maxOrder = -1;
+                } else {
+                    $maxOrder = $bien->images()->max('ordre') ?? -1;
+                }
+
                 foreach ($request->file('images') as $index => $image) {
                     $url = $this->imageService->upload($image, 'biens/' . $bien->id);
                     $bien->images()->create([
