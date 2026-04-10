@@ -19,7 +19,7 @@ return [
     'allowed_methods' => ['*'],
 
     // 💡 Nous gardons l'origine exacte de votre frontend. C'est correct.
-    'allowed_origins' => ['http://192.168.100.138:5173'],
+    'allowed_origins' => ['https://capital-immo-group.com', "https://www.capital-immo-group.com"],
     // https://etravel-murex.vercel.app
 
     'allowed_origins_patterns' => [],
