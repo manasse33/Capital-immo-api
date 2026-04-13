@@ -9,10 +9,13 @@ use Illuminate\Support\Str;
 class ImageUploadService
 {
     protected $disk;
+    protected $diskName;
 
     public function __construct()
     {
-        $this->disk = Storage::disk(config('filesystems.default', 'local'));
+        $configured = config('filesystems.default', 'local');
+        $this->diskName = $configured === 'local' ? 'public' : $configured;
+        $this->disk = Storage::disk($this->diskName);
     }
 
     public function upload(UploadedFile $file, string $directory = 'images'): string
@@ -27,9 +30,12 @@ class ImageUploadService
         }
 
         // Stockage local ou S3
-        $file->storeAs($directory, $filename, 'public');
+        if (!$this->disk->exists($directory)) {
+            $this->disk->makeDirectory($directory);
+        }
+        $file->storeAs($directory, $filename, $this->diskName);
 
-        return '/storage/' . $path;
+        return $this->disk->url($path);
     }
 
     public function uploadMultiple(array $files, string $directory = 'images'): array
@@ -50,12 +56,29 @@ class ImageUploadService
         }
 
         // Suppression du stockage local
-        $path = str_replace('/storage/', '', $url);
+        $path = $this->extractPathFromUrl($url);
         return $this->disk->delete($path);
     }
 
     public function getUrl(string $path): string
     {
         return $this->disk->url($path);
+    }
+
+    protected function extractPathFromUrl(string $url): string
+    {
+        $path = $url;
+        if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://')) {
+            $parsed = parse_url($url);
+            $path = $parsed['path'] ?? $url;
+        }
+
+        $marker = '/storage/';
+        $pos = strpos($path, $marker);
+        if ($pos !== false) {
+            $path = substr($path, $pos + strlen($marker));
+        }
+
+        return ltrim($path, '/');
     }
 }

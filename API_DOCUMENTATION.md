@@ -350,7 +350,7 @@ GET /entreprise
   "adresse": "Rue Monseigneur Biéchy 2015, Brazzaville",
   "telephone": "+242 04 411 3436",
   "whatsapp": "+242 04 411 3436",
-  "email": "contact@capitalimogroup.com",
+  "email": "contact@capital-immo-group.com",
   "facebook": "@capitalimogroup01",
   "facebook_url": "https://facebook.com/capitalimogroup01",
   "horaires": {

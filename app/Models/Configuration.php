@@ -60,7 +60,7 @@ class Configuration extends Model
             'adresse' => self::get('entreprise.adresse', 'Rue Monseigneur Biéchy 2015, Brazzaville'),
             'telephone' => self::get('entreprise.telephone', '+242 04 411 3436'),
             'whatsapp' => self::get('entreprise.whatsapp', '+242 04 411 3436'),
-            'email' => self::get('entreprise.email', 'contact@capitalimogroup.com'),
+            'email' => self::get('entreprise.email', 'contact@capital-immo-group.com'),
             'facebook' => self::get('entreprise.facebook', '@capitalimogroup01'),
             'facebook_url' => self::get('entreprise.facebook_url', 'https://facebook.com/capitalimogroup01'),
             'description' => self::get('entreprise.description', 'Votre partenaire de confiance en immobilier au Congo.'),

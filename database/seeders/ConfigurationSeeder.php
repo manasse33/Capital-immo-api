@@ -16,7 +16,7 @@ class ConfigurationSeeder extends Seeder
             ['key' => 'entreprise.adresse', 'value' => 'Rue Monseigneur Biéchy 2015, Brazzaville, République du Congo', 'type' => 'string', 'group' => 'entreprise', 'label' => 'Adresse'],
             ['key' => 'entreprise.telephone', 'value' => '+242 04 411 3436', 'type' => 'string', 'group' => 'entreprise', 'label' => 'Téléphone'],
             ['key' => 'entreprise.whatsapp', 'value' => '+242 04 411 3436', 'type' => 'string', 'group' => 'entreprise', 'label' => 'WhatsApp'],
-            ['key' => 'entreprise.email', 'value' => 'contact@capitalimogroup.com', 'type' => 'string', 'group' => 'entreprise', 'label' => 'Email'],
+            ['key' => 'entreprise.email', 'value' => 'contact@capital-immo-group.com', 'type' => 'string', 'group' => 'entreprise', 'label' => 'Email'],
             ['key' => 'entreprise.facebook', 'value' => '@capitalimogroup01', 'type' => 'string', 'group' => 'entreprise', 'label' => 'Facebook'],
             ['key' => 'entreprise.facebook_url', 'value' => 'https://facebook.com/capitalimogroup01', 'type' => 'string', 'group' => 'entreprise', 'label' => 'URL Facebook'],
             ['key' => 'entreprise.description', 'value' => 'Votre partenaire de confiance en immobilier au Congo.', 'type' => 'string', 'group' => 'entreprise', 'label' => 'Description courte'],
